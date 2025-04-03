@@ -1,3 +1,4 @@
+"use client";
 import Card from "@/ui/dashboard/card/card";
 import Chart from "@/ui/dashboard/chart/chart";
 import Rightbar from "@/ui/dashboard/rightbar/rightbar";
