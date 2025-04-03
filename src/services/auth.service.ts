@@ -64,7 +64,30 @@ class AuthService {
       // If the login fails or any network issue occurs, throw an error
       throw new Error(error.message || 'An error occurred during login');
     }
+
+
   }
+
+  async logout(): Promise<AuthResponse> {
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/logout`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', // Include credentials (cookies)
+      });
+
+      if (!response.ok) {
+        throw new Error(`Logout failed: ${response.statusText}`);
+      }
+
+      // Return the response JSON (in case you need to use it)
+      return await response.json();
+    } catch (error: any) {
+      // If the login fails or any network issue occurs, throw an error
+      throw new Error(error.message || 'An error occurred during login');
+    }}
 }
 
 export const authService = new AuthService(); 

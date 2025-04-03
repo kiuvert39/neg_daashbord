@@ -34,14 +34,17 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       const response = await authService.login(data);
+      console.log("🔍 Full API Response:", response);
       
       // Since the login function returns the response JSON (no 'ok' field), check directly
-      if (response && response.token) {
-        // Store token in cookie and redirect
-        document.cookie = `token=${response.token}; path=/; Secure`;
-        router.push('/dashboard');
-        toast.success('Logged in successfully!');
-      }
+     
+    if (response?.token) {
+      console.log("✅ Login successful, redirecting...");
+      toast.success('Logged in successfully!');
+
+      // Redirect to the dashboard after login
+      router.push("/dashboard");
+    }
     } catch (error: any) {
       console.error('Login error:', error);
       toast.error(error.message || 'Login failed');

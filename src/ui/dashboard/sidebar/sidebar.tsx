@@ -17,6 +17,7 @@ import {
   MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
+import { authService } from "@/services/auth.service";
 
 
 const menuItems = [
@@ -88,14 +89,19 @@ const Sidebar = () => {
     img: "/noavatar.png", 
     username: "Default User" 
   };
-  function signOut() {
+  async function signOut() {
     try {
-      localStorage.removeItem('token')
-      toast.success('Logged out successfully')
-      router.push('/login')
+
+     await authService.logout()
+  
+      // Show success message
+      toast.success("Logged out successfully");
+  
+      // Redirect to login page
+      router.push("/login");
     } catch (error) {
-      toast.error('Error logging out')
-      console.error('Logout error:', error)
+      toast.error("Error logging out");
+      console.error("Logout error:", error);
     }
   }
 
