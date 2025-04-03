@@ -30,6 +30,7 @@ class AuthService {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
+
     });
 
     if (!response.ok) {
@@ -41,20 +42,28 @@ class AuthService {
   }
 
   async login(data: LoginData): Promise<AuthResponse> {
-    const response = await fetch(`${this.baseUrl}/auth/login`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    try {
+      const response = await fetch(`${this.baseUrl}/auth/login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+        credentials: 'include', // Include credentials (cookies)
+      });
 
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Login failed');
+      if (!response.ok) {
+        // Handle non-OK responses
+        const error = await response.json();
+        throw new Error(error.error || 'Login failed');
+      }
+
+      // Return the response JSON (in case you need to use it)
+      return response.json();
+    } catch (error: any) {
+      // If the login fails or any network issue occurs, throw an error
+      throw new Error(error.message || 'An error occurred during login');
     }
-
-    return response.json();
   }
 }
 

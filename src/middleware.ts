@@ -1,30 +1,27 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
-
-// Add paths that should be accessible without authentication
-const publicPaths = ['/login', '/register', '/api/auth']
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  // Get the path of the request
-  const path = request.nextUrl.pathname
+  // Get the token from cookies or headers
+  const token = request.cookies.get("token")?.value || request.headers.get("Authorization");
 
-  // Check if the path is public
-  const isPublicPath = publicPaths.some(publicPath => 
-    path.startsWith(publicPath)
-  )
+  // Define protected routes
+  const protectedRoutes = ["/dashboard", "/profile", "/settings"];
 
-  // For API routes, let the endpoint handle authentication
-  if (path.startsWith('/api/')) {
-    return NextResponse.next()
+  // Check if the requested path is protected
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    request.nextUrl.pathname.startsWith(route)
+  );
+
+  if (isProtectedRoute && !token) {
+    // Redirect unauthenticated users to login before rendering the page
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // We'll handle auth check on the client side
-  // This middleware will only prevent direct URL access
-  return NextResponse.next()
+  return NextResponse.next();
 }
 
+// Apply middleware to protected routes
 export const config = {
-  matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|public).*)',
-  ],
-}
+  matcher: ["/dashboard/:path*", "/profile/:path*", "/settings/:path*"],
+};

@@ -35,19 +35,16 @@ const LoginForm = () => {
     try {
       const response = await authService.login(data);
       
-      // Store the token in localStorage or your preferred storage method
-      localStorage.setItem('token', response.token);
-      
-      // Show success message
-      toast.success('Logged in successfully!');
-      
-      // Redirect to dashboard or home page
-      router.push('/dashboard');
-      
+      // Since the login function returns the response JSON (no 'ok' field), check directly
+      if (response && response.token) {
+        // Store token in cookie and redirect
+        document.cookie = `token=${response.token}; path=/; Secure`;
+        router.push('/dashboard');
+        toast.success('Logged in successfully!');
+      }
     } catch (error: any) {
       console.error('Login error:', error);
-      const errorMessage  = error.message || 'Login failed';
-      toast.error(errorMessage);
+      toast.error(error.message || 'Login failed');
     }
   };
 
