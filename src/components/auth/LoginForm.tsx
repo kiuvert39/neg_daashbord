@@ -44,9 +44,10 @@ const LoginForm = () => {
       // Redirect to dashboard or home page
       router.push('/dashboard');
       
-    } catch (error) {
+    } catch (error: any) {
       console.error('Login error:', error);
-      toast.error(error instanceof Error ? error.message : 'Login failed');
+      const errorMessage  = error.message || 'Login failed';
+      toast.error(errorMessage);
     }
   };
 
