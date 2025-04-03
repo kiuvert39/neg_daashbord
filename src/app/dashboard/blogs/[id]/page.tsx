@@ -1,6 +1,6 @@
 
 ;
-import styles from "@/app/ui/dashboard/products/singleProduct/singleProduct.module.css";
+import styles from "@/ui/dashboard/products/products.module.css";
 import Image from "next/image";
 
 const SingleProductPage = async ({ params }: any) => {
