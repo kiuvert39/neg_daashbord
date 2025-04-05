@@ -37,15 +37,15 @@ const LoginForm = () => {
       console.log("🔍 Full API Response:", response);
       
       // Since the login function returns the response JSON (no 'ok' field), check directly
-     
-    if (response?.token) {
-      console.log("✅ Login successful, redirecting...");
-      toast.success('Logged in successfully!');
+     router.push("/dashboard");
+    // if (response?.token) {
+    //   console.log("✅ Login successful, redirecting...");
+    //   toast.success('Logged in successfully!');
 
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 1000); // Adding a small delay
-    }
+    //   setTimeout(() => {
+        
+    //   }, 1000); // Adding a small delay
+    // }
     } catch (error: any) {
       console.error('Login error:', error);
       toast.error(error.message || 'Login failed');
