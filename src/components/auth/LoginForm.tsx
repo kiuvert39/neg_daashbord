@@ -42,8 +42,9 @@ const LoginForm = () => {
       console.log("✅ Login successful, redirecting...");
       toast.success('Logged in successfully!');
 
-      // Redirect to the dashboard after login
-      router.push("/dashboard");
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 1000); // Adding a small delay
     }
     } catch (error: any) {
       console.error('Login error:', error);

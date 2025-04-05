@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+    domains: [
+      'i.ibb.co',
+      'example.com',
+      'images.yourapi.com'
+    ],
+  },
 };
 
 export default nextConfig;

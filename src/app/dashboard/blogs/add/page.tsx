@@ -1,6 +1,8 @@
 "use client";
 
+import { blogPostService } from '@/services/post.service';
 import React, { ChangeEvent, FormEvent, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 interface FormData {
   title: string;
@@ -20,6 +22,7 @@ const MorningForm = () => {
     message: ''
   });
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const getGreeting = () => {
@@ -55,17 +58,14 @@ const MorningForm = () => {
   const handleImageUpload = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      setSelectedFile(file);
+      setImagePreview(URL.createObjectURL(file));
     }
   };
 
   const handleRemoveImage = () => {
+    setSelectedFile(null);
     setImagePreview(null);
-    // Reset the file input
     const fileInput = document.getElementById('file-upload') as HTMLInputElement;
     if (fileInput) {
       fileInput.value = '';
@@ -74,23 +74,34 @@ const MorningForm = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!selectedFile) {
+        console.error('No file selected');
+        return;
+    }
     try {
+
       // Here you would typically send the data to your API
       const formPayload = {
         ...formData,
-        image: imagePreview,
+        image: selectedFile as File, // Type assertion since we'll only submit when file exists
       };
       console.log('Form submitted:', formPayload);
+
+      const response = blogPostService.createPost(formPayload)
+      console.log('Post created successfully:', response);
       
-      // Example API call:
-      // const response = await fetch('/api/submit-form', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(formPayload),
-      // });
-      
+      setFormData({
+        title: '',
+        description: '',
+        subject: '',
+        solution: '',
+        message: ''
+    });
+    setImagePreview(null);
+    toast.success('Post created successfully!');
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast.error('Failed to create post');
     }
   };
 

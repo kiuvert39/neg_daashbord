@@ -4,6 +4,7 @@ import { Toaster } from 'react-hot-toast';
 import "./globals.css";
 import AuthGuard from "@/lib/AuthGuard";
 
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -13,6 +14,8 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -29,9 +32,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthGuard>{children}</AuthGuard>
-        <Toaster position="top-right" />
 
+          <AuthGuard>{children}</AuthGuard>
+
+        <Toaster position="top-right" />
       </body>
     </html>
   );
