@@ -33,7 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
 
-          <AuthGuard>{children}</AuthGuard>
+          {children}
 
         <Toaster position="top-right" />
       </body>

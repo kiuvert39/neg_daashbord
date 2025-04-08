@@ -49,6 +49,8 @@ const FaqPage = ({ searchParams }: any) => {
     }
   };
 
+  
+
   return (
     <div className={styles.container}>
       <div className={styles.top}>
@@ -73,18 +75,12 @@ const FaqPage = ({ searchParams }: any) => {
               <td>{faq.answer}</td>
               <td>{formatDate(faq.created_at)}</td>
               <td>
-                <div className={styles.buttons}>
+              <div className={styles.buttons}>
                   <Link href={`/dashboard/faqs/${faq.id}`}>
                     <button className={`${styles.button} ${styles.view}`}>
-                      View
+                      Update
                     </button>
                   </Link>
-                  <form>
-                    <input type="hidden" name="id" value={faq.id} />
-                    <button className={`${styles.button} ${styles.delete}`}>
-                      Delete
-                    </button>
-                  </form>
                 </div>
               </td>
             </tr>

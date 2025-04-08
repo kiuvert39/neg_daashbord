@@ -45,7 +45,7 @@ class HomepageService {
     async getFaq(page: number = 1, per_page: number = 10): Promise<any> {
         try {
             // Make a GET request with page and per_page parameters for pagination
-            const response = await fetch(`${this.baseurl}/faq?page=${page}&per_page=${per_page}`, {
+            const response = await fetch(`${this.baseurl}/faq/?page=${page}&per_page=${per_page}`, {
                 method: 'GET', // Use GET method to fetch FAQs
                 headers: {
                     'Content-Type': 'application/json',
@@ -63,6 +63,79 @@ class HomepageService {
             throw new Error(error.message || 'An error occurred while fetching FAQs');
         }
     }
+
+    async getFaqById(id: string): Promise<any> {
+        try {
+            const response = await fetch(`${this.baseurl}/faq/${id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Include credentials (cookies)
+            });
+    
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch FAQ');
+            }
+    
+            return await response.json();
+        } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching FAQ');
+        }
+    }
+
+
+    async updateFaq(id: string, data: any): Promise<any> {
+
+
+        try {
+            const  response = await fetch(`${this.baseurl}/faq/${id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data), 
+                credentials: 'include', // Include credentials (cookies)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch FAQ');
+            }
+            
+            return await response.json();
+        }
+        catch (error: any ){
+            throw new Error(error.message || 'An error occurred while fetching FAQ');
+
+        }
+    }
+
+
+    async deleteFaq(id: string): Promise<any> {
+        try {
+            const  response = await fetch(`${this.baseurl}/faq/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include', // Include credentials (cookies)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch FAQ');
+            }
+            
+            return await response.json();
+        }
+        catch (error: any ){
+            throw new Error(error.message || 'An error occurred while fetching FAQ');
+
+        }
+    }
+
     
 }
 
