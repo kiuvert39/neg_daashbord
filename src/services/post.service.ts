@@ -42,22 +42,22 @@ class BlogPostService {
     }
 
 
-    // async getPosts(): Promise<any> {
-    //     try {
-    //         const response = await fetch(`${this.baseurl}/post/`, {
-    //             method: 'GET',
-    //         });
+    async getPosts(): Promise<any> {
+        try {
+            const response = await fetch(`${this.baseurl}/post/`, {
+                method: 'GET',
+            });
 
-    //         if (!response.ok) {
-    //             const errorData = await response.json();
-    //             throw new Error(errorData.error || 'Failed to fetch posts');
-    //         }
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch posts');
+            }
 
-    //         return await response.json();
-    //     } catch (error: any) {
-    //         throw new Error(error.message || 'An error occurred while fetching posts');
-    //     }
-    // }
+            return await response.json();
+        } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching posts');
+        }
+    }
 
 
     async getProject(): Promise<any>{
