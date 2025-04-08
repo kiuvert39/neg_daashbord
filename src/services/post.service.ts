@@ -42,20 +42,40 @@ class BlogPostService {
     }
 
 
-    async getPosts(): Promise<any> {
+    // async getPosts(): Promise<any> {
+    //     try {
+    //         const response = await fetch(`${this.baseurl}/post/`, {
+    //             method: 'GET',
+    //         });
+
+    //         if (!response.ok) {
+    //             const errorData = await response.json();
+    //             throw new Error(errorData.error || 'Failed to fetch posts');
+    //         }
+
+    //         return await response.json();
+    //     } catch (error: any) {
+    //         throw new Error(error.message || 'An error occurred while fetching posts');
+    //     }
+    // }
+
+
+    async getProject(): Promise<any>{
         try {
-            const response = await fetch(`${this.baseurl}/post`, {
+
+            const response = await fetch(`${API_BASE_URL}/project/`, {
                 method: 'GET',
             });
 
             if (!response.ok) {
                 const errorData = await response.json();
-                throw new Error(errorData.error || 'Failed to fetch posts');
+                throw new Error(errorData.error || 'Failed to fetch homepage');
             }
 
+           
             return await response.json();
         } catch (error: any) {
-            throw new Error(error.message || 'An error occurred while fetching posts');
+            throw new Error(error.message || 'An error occurred while fetching homepage');
         }
     }
 }

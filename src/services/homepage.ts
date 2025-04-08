@@ -1,4 +1,5 @@
 import { API_BASE_URL } from "@/lib/config";
+import toast from "react-hot-toast";
 
 class HomepageService {
     private baseurl = API_BASE_URL
@@ -133,6 +134,73 @@ class HomepageService {
         catch (error: any ){
             throw new Error(error.message || 'An error occurred while fetching FAQ');
 
+        }
+    }
+
+    async createCaseStudy(data: any): Promise<any>{
+        try {
+
+            const formData = new FormData()
+
+            formData.append('title', data.title);
+            formData.append('content', data.content);
+            formData.append('image', data.image);
+
+
+            const response = await fetch(`${this.baseurl}/case_study/create`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch homepage');
+            }
+
+            toast.success('case study created successfully!');
+
+            return await response.json();
+        } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching homepage');
+        }
+    }
+
+
+    async getLastestCaseStudy():Promise<any>{
+        try {
+
+            const response = await fetch(`${this.baseurl}/case_study/`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch homepage');
+            }
+
+           
+            return await response.json();
+        } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching homepage');
+        }
+    }
+
+    async getProject(): Promise<any>{
+        try {
+
+            const response = await fetch(`${this.baseurl}/project/`, {
+                method: 'GET',
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch homepage');
+            }
+
+           
+            return await response.json();
+        } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching homepage');
         }
     }
 
