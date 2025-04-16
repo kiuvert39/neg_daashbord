@@ -1,5 +1,6 @@
 import { API_BASE_URL } from "@/lib/config";
 import toast from "react-hot-toast";
+import { json } from "stream/consumers";
 
 class HomepageService {
     private baseurl = API_BASE_URL
@@ -223,6 +224,30 @@ class HomepageService {
           throw new Error(error.message || 'An error occurred while fetching homepage');
         }
       }
+
+    async createDes(data: any): Promise<any>{
+
+        try {
+            const response = await fetch(`${this.baseurl}/description/create`, {
+              method: 'POST',
+              body: JSON.stringify(data),
+              headers: {
+                'Content-Type': 'application/json',
+            },
+            });
+
+            const responseData = await response.json();
+        
+            if (!response.ok) {
+              throw new Error(responseData.error || 'Failed to fetch homepage');
+            }
+        
+            return responseData; // Return the response data if everything is fine
+          } catch (error: any) {
+            throw new Error(error.message || 'An error occurred while fetching homepage');
+          }
+
+    }
       
     
 }

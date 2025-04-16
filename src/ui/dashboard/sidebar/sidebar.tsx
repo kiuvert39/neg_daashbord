@@ -32,6 +32,8 @@ const menuItems = [
       { title: "Update Case Study Section", path: "/dashboard/casestudy", icon: <MdAttachMoney /> },
       { title: "Projects", path: "/dashboard/projects", icon: <MdAttachMoney /> },
       { title: "concept section", path: "/dashboard/market", icon: <MdAttachMoney /> },
+      { title: "description", path: "/dashboard/description", icon: <MdAttachMoney /> },
+      { title: "videos", path: "/dashboard/videos", icon: <MdAttachMoney /> },
     ],
   },
 
