@@ -5,19 +5,18 @@ import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 import {
   MdDashboard,
   MdSupervisedUserCircle,
   MdShoppingBag,
   MdAttachMoney,
-  MdWork,
   MdAnalytics,
   MdPeople,
-  MdOutlineSettings,
-  MdHelpCenter,
   MdLogout,
 } from "react-icons/md";
+
 import { authService } from "@/services/auth.service";
 import { Button } from "@/components/ui/button";
 
@@ -31,17 +30,30 @@ const menuItems = [
       { title: "Update Hero Section", path: "/dashboard/hero", icon: <MdAttachMoney /> },
       { title: "Update Case Study Section", path: "/dashboard/casestudy", icon: <MdAttachMoney /> },
       { title: "Projects", path: "/dashboard/projects", icon: <MdAttachMoney /> },
-      { title: "concept section", path: "/dashboard/market", icon: <MdAttachMoney /> },
-      { title: "description", path: "/dashboard/description", icon: <MdAttachMoney /> },
-      { title: "videos", path: "/dashboard/videos", icon: <MdAttachMoney /> },
+      { title: "Concept Section", path: "/dashboard/market", icon: <MdAttachMoney /> },
+      { title: "Description", path: "/dashboard/description", icon: <MdAttachMoney /> },
+      { title: "Videos", path: "/dashboard/videos", icon: <MdAttachMoney /> },
     ],
   },
-
+  {
+    title: "Opt-in Page",
+    description: "Manage newsletter and lead magnet sections",
+    list: [
+      { title: "hero section", path: "/dashboard/optin/hero", icon: <MdPeople /> },
+      { title: "Lead Magnet", path: "/dashboard/optin/lead-magnet", icon: <MdAnalytics /> },
+    ],
+  },
 ];
 
 const Sidebar = () => {
   const router = useRouter();
   const user = { img: "/noavatar.png", username: "Default User" };
+
+  const [openSections, setOpenSections] = useState<Record<string, boolean>>({});
+
+  const toggleSection = (title: string) => {
+    setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
+  };
 
   async function signOut() {
     try {
@@ -56,11 +68,12 @@ const Sidebar = () => {
 
   return (
     <div className={styles?.container}>
+      {/* User Info */}
       <div className={styles?.user}>
         <Image
           className={styles?.userImage}
           src={user?.img || "/noavatar.png"}
-          alt=""
+          alt="avatar"
           width="50"
           height="50"
         />
@@ -70,21 +83,36 @@ const Sidebar = () => {
         </div>
       </div>
 
-      {/* Scrollable List of Menu Items */}
-      <div className="overflow-y-auto flex-grow">
+      {/* Menu */}
+      <div className="overflow-y-auto flex-grow no-scrollbar">
         <ul className={styles.list}>
           {menuItems.map((cat) => (
             <li key={cat.title}>
-              <span className={styles.cat}>{cat?.title}</span>
-              {cat.list.map((item) => (
-                <MenuLink item={item} key={item?.title} />
-              ))}
+              <button
+                type="button"
+                onClick={() => toggleSection(cat.title)}
+                className={`${styles.cat} w-full text-left`}
+              >
+                {cat.title}
+              </button>
+
+              {cat.description && openSections[cat.title] && (
+                <p className="text-xs text-gray-500 px-3 pt-1">{cat.description}</p>
+              )}
+
+              {openSections[cat.title] && (
+                <ul className="pl-2">
+                  {cat.list.map((item) => (
+                    <MenuLink item={item} key={item.title} />
+                  ))}
+                </ul>
+              )}
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Logout Button */}
+      {/* Logout */}
       <form
         onSubmit={(e) => {
           e.preventDefault();
