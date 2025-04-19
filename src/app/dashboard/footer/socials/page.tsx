@@ -20,32 +20,37 @@ const footerSchema = z.object({
 
 type FooterFormData = z.infer<typeof footerSchema>;
 
-interface FooterAdminFormProps {
-  initialData: FooterFormData;
-  onSave: (data: FooterFormData) => Promise<void>;
-}
+export default function FooterAdminForm() {
+  const [loading, setLoading] = useState(false);
 
-export default function FooterAdminForm({
-  initialData,
-  onSave,
-}: FooterAdminFormProps) {
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<FooterFormData>({
     resolver: zodResolver(footerSchema),
-    defaultValues: initialData,
+    defaultValues: {
+      brandName: "Agilery",
+      address: "Uetlibergstrasse 65, 8045 Zürich",
+      email: "hello@agilery.ch",
+      phone: "+41 (0) 44 688 02 16",
+      legalNoticeLink: "https://agilery.ch/privacy-policy",
+      socialLinks: {
+        linkedin: "https://linkedin.com/company/agilery",
+        instagram: "https://instagram.com/agilery",
+        facebook: "https://facebook.com/agilery",
+      },
+    },
   });
 
-  const [loading, setLoading] = useState(false);
-
-  const submitHandler = async (data: FooterFormData) => {
+  const onSubmit = async (data: FooterFormData) => {
     setLoading(true);
     try {
-      await onSave(data);
-    } catch (err) {
-      console.error("Failed to save footer info:", err);
+      console.log("Saving footer data...", data);
+      // You can replace this with actual API call
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+    } catch (error) {
+      console.error("Save failed", error);
     } finally {
       setLoading(false);
     }
@@ -53,12 +58,11 @@ export default function FooterAdminForm({
 
   return (
     <form
-      onSubmit={handleSubmit(submitHandler)}
+      onSubmit={handleSubmit(onSubmit)}
       className="bg-white p-8 rounded-2xl shadow-md space-y-8 max-w-3xl mx-auto"
     >
       <h2 className="text-2xl font-bold text-gray-800">Update Footer Information</h2>
 
-      {/* Brand & Contact Info */}
       <div className="grid md:grid-cols-2 gap-6">
         <Input
           label="Brand Name"
@@ -98,7 +102,6 @@ export default function FooterAdminForm({
         />
       </div>
 
-      {/* Social Links */}
       <div>
         <h3 className="text-lg font-semibold text-gray-700 mb-3">Social Media Links</h3>
         <div className="grid md:grid-cols-3 gap-6">
@@ -126,7 +129,6 @@ export default function FooterAdminForm({
         </div>
       </div>
 
-      {/* Submit Button */}
       <div className="text-center">
         <button
           type="submit"
@@ -144,7 +146,7 @@ export default function FooterAdminForm({
   );
 }
 
-// 🌟 Reusable Input Component with placeholder support
+// Reusable input component
 interface InputProps {
   label: string;
   name: string;
