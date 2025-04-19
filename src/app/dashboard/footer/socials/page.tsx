@@ -29,18 +29,6 @@ export default function FooterAdminForm() {
     formState: { errors },
   } = useForm<FooterFormData>({
     resolver: zodResolver(footerSchema),
-    defaultValues: {
-      brandName: "Agilery",
-      address: "Uetlibergstrasse 65, 8045 Zürich",
-      email: "hello@agilery.ch",
-      phone: "+41 (0) 44 688 02 16",
-      legalNoticeLink: "https://agilery.ch/privacy-policy",
-      socialLinks: {
-        linkedin: "https://linkedin.com/company/agilery",
-        instagram: "https://instagram.com/agilery",
-        facebook: "https://facebook.com/agilery",
-      },
-    },
   });
 
   const onSubmit = async (data: FooterFormData) => {
