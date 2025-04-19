@@ -40,7 +40,17 @@ const menuItems = [
     description: "Manage newsletter and lead magnet sections",
     list: [
       { title: "hero section", path: "/dashboard/optin/hero", icon: <MdPeople /> },
-      { title: "Lead Magnet", path: "/dashboard/optin/lead-magnet", icon: <MdAnalytics /> },
+      { title: "what's NEG", path: "/dashboard/optin/explaination", icon: <MdAnalytics /> },
+      { title: "story", path: "/dashboard/optin/story", icon: <MdAnalytics /> },
+      { title: "video", path:"/dashboard/optin/videos", icon: <MdAnalytics /> },
+    ],
+  },
+
+  {
+    title: "Footer Section",
+    description: "Manage newsletter and lead magnet sections",
+    list: [
+      { title: "social medial links", path: "/dashboard/footer/socials", icon: <MdPeople /> }
     ],
   },
 ];
