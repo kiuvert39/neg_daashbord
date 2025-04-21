@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
+import { optinService } from "@/services/optin";
+import toast from "react-hot-toast";
 
 const footerSchema = z.object({
   brandName: z.string().min(1, "Brand name is required"),
@@ -25,6 +27,7 @@ export default function FooterAdminForm() {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<FooterFormData>({
@@ -34,12 +37,15 @@ export default function FooterAdminForm() {
   const onSubmit = async (data: FooterFormData) => {
     setLoading(true);
     try {
-      console.log("Saving footer data...", data);
-      // You can replace this with actual API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      const response = await optinService.createFooter(data);
+      console.log("Saving footer data...", response);
+      toast.success("Footer data saved successfully");
+      
     } catch (error) {
+      toast.error("Failed to save footer data");
       console.error("Save failed", error);
     } finally {
+      reset()
       setLoading(false);
     }
   };

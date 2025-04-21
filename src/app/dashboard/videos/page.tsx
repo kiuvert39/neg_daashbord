@@ -86,7 +86,7 @@ const VideoUpload: React.FC = () => {
       <button
         onClick={handleUpload}
         disabled={!videoFile}
-        className="w-full mt-6 bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full mt-6 cursor-pointer bg-teal-500 hover:bg-teal-600 text-white py-2 px-4 rounded-xl transition disabled:opacity-50 disabled:cursor-not-allowed"
       >
         {videoFile ? "Upload Video" : "Choose a Video First"}
       </button>
