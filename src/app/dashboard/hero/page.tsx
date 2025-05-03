@@ -9,9 +9,7 @@ import toast from "react-hot-toast";
 
 // Zod schema for validation
 const uploadSchema = z.object({
-  title: z.string().min(1, "Title is required"),
   highlight: z.string().min(1, "Highlight is required"),
-  subtitle: z.string().min(1, "Subtitle is required"),
   description: z.string().min(1, "Description is required"),
   images: z.any().optional(), // We handle image validation separately
 });
@@ -42,9 +40,7 @@ const UploadForm = () => {
 
     try {
       const formDataToSubmit = new FormData();
-      formDataToSubmit.append("title", data.title);
-      formDataToSubmit.append("highlight", data.highlight);
-      formDataToSubmit.append("subtitle", data.subtitle);
+      formDataToSubmit.append("highlight", data.highlight);;
       formDataToSubmit.append("description", data.description);
       selectedImages.forEach((image) =>
         formDataToSubmit.append("images", image)
@@ -73,22 +69,10 @@ const UploadForm = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 max-w-2xl mx-auto">
-      {/* Title */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700">Title</label>
-        <input
-          type="text"
-          {...register("title")}
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-300"
-        />
-        {errors.title && (
-          <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
-        )}
-      </div>
 
       {/* Highlight */}
       <div>
-        <label className="block text-sm font-semibold text-gray-700">Highlight</label>
+        <label className="block text-sm font-semibold text-gray-700">Headline</label>
         <input
           type="text"
           {...register("highlight")}
@@ -96,19 +80,6 @@ const UploadForm = () => {
         />
         {errors.highlight && (
           <p className="text-sm text-red-500 mt-1">{errors.highlight.message}</p>
-        )}
-      </div>
-
-      {/* Subtitle */}
-      <div>
-        <label className="block text-sm font-semibold text-gray-700">Subtitle</label>
-        <input
-          type="text"
-          {...register("subtitle")}
-          className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-teal-500 focus:outline-none transition duration-300"
-        />
-        {errors.subtitle && (
-          <p className="text-sm text-red-500 mt-1">{errors.subtitle.message}</p>
         )}
       </div>
 
