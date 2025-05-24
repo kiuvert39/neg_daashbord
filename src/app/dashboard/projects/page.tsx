@@ -73,8 +73,14 @@ const Projects = ({ searchParams }: any) => {
         <tbody>
           {projects.map((project: Project) => (
             <tr key={project.id}>
-              <td>{project.title.slice(0, 50)}{project.title.length > 50 ? "..." : ""}</td>
-              <td>{project.content.slice(0, 50)}{project.content.length > 50 ? "..." : ""}</td>
+              <td>
+                {project.title.slice(0, 50)}
+                {project.title.length > 50 ? "..." : ""}
+              </td>
+              <td>
+                {project.content.slice(0, 50)}
+                {project.content.length > 50 ? "..." : ""}
+              </td>
               <td>{formatDate(project.created_at)}</td>
               <td>
                 <div className={styles.buttons}>
@@ -83,6 +89,10 @@ const Projects = ({ searchParams }: any) => {
                       Update
                     </button>
                   </Link>
+                  <input type="hidden" name="id" />
+                  <button className={`${styles.button} ${styles.delete}`}>
+                    Delete
+                  </button>
                 </div>
               </td>
             </tr>

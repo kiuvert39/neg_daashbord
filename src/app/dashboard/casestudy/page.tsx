@@ -91,7 +91,11 @@ const BlogsPage = ({ searchParams }: any) => {
                   {post.title}
                 </div>
               </td>
-              <td>{post.content.length > 50 ? post.content.slice(0, 50) + "..." : post.content}</td>
+              <td>
+                {post.content.length > 50
+                  ? post.content.slice(0, 50) + "..."
+                  : post.content}
+              </td>
 
               <td>{formatDate(post.created_at)}</td>
               <td>
@@ -101,6 +105,10 @@ const BlogsPage = ({ searchParams }: any) => {
                       View
                     </button>
                   </Link>
+                  <input type="hidden" name="id" />
+                  <button className={`${styles.button} ${styles.delete}`}>
+                    Delete
+                  </button>
                 </div>
               </td>
             </tr>
