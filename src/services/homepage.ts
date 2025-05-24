@@ -204,6 +204,29 @@ class HomepageService {
             throw new Error(error.message || 'An error occurred while fetching homepage');
         }
     }
+
+    async createProject(data:any) : Promise<any>{
+        try {
+          const response = await fetch(`${this.baseurl}/project/create`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || "Failed to fetch homepage");
+          }
+
+          return await response.json();
+        } catch (error: any) {
+          throw new Error(
+            error.message || "An error occurred while fetching homepage"
+          );
+        }
+    }
     async createConcept(data: any): Promise<any> {
         try {
           const response = await fetch(`${this.baseurl}/concept/create`, {

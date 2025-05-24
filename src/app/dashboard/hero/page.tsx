@@ -52,6 +52,7 @@ const UploadForm = () => {
       reset(); // reset form fields
       setSelectedImages([]); // clear uploaded images
     } catch (error) {
+      console.log("error",error)
       toast.error("Error uploading data");
     } finally {
       setLoading(false);

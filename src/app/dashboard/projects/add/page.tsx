@@ -48,9 +48,9 @@ const MorningForm = () => {
 
   const onSubmit = async (data: FormData) => {
     try {
-      await homepageService.createCaseStudy(data);
+      await homepageService.createProject(data);
       reset();
-      toast.success('Case study created!');
+      toast.success('project created!');
     } catch (error) {
       console.error('Error submitting form:', error);
       toast.error('Failed to create post');
